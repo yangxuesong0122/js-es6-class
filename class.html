@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button>点击</button>
+  <script>
+    let that
+    class Father {
+      constructor(x, y) {
+        that = this
+        // constructor 中的this指向的是 创建的实例对象
+        this.x = x
+        this.y = y
+        this.btn = document.querySelector('button')
+        this.btn.onclick = this.getMoney
+      }
+      say() {
+        return '我是父类'
+      }
+      sum() {
+        // 里面的this指向的是实例对象，因为father调用的这个方法
+        console.log(this.x + this.y)
+      }
+      getMoney() {
+        // 这个方法里面的this指向的是btn这个按钮，因为是这个按钮调用的这个方法
+        // console.log(this)
+        // console.log(this.x)
+        console.log(that.x)
+      }
+    }
+    class Son extends Father { // 继承
+      constructor(x, y) {
+        // 调用父类的构造函数，super 必须在子类this前面，也就是先调用父类的构造方法，再使用子类构造方法
+        super(x, y)
+        this.x = x
+        this.y = y
+      }
+      // 继承中的属性或者方法查找原则：就近原则
+      say() {
+        // super.say() 就是调用父类的普通函数
+        console.log(super.say() + '的子类')
+      }
+    }
+    // let son = new Son(1, 5)
+    let father = new Father(1, 5)
+    father.sum()
+  </script>
+</body>
+</html>
+
+<!-- constructor 里面的 this 指向实例对象，方法里面的this指向这个方法的调用者 -->
