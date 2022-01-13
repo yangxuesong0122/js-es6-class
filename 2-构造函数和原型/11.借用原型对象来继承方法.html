@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+      function Father() {
+        this.run = function() {
+          console.log('父亲喜欢跑步')
+        }
+      }
+      Father.prototype.work = function() {
+        console.log('父亲要工作')
+      }
+
+      function Son() {
+      }
+
+      // 使子原型对象指向一个父实例对象，便拥有了父构造函数的方法以及父构造函数的原型对象上的方法
+      Son.prototype = new Father()
+      // 如果利用对象的形式修改了原型对象，需再利用constructor指回原来的构造函数
+      Son.prototype.constructor = Son
+      Son.prototype.exam = function() {
+          console.log('孩子要考试')
+      }
+      let xiaoming = new Son()
+      console.log(xiaoming)
+  </script>
+</body>
+
+</html>
