@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let obj = {
+      id: 1,
+      name: 'xiaoming',
+    }
+    // 原始的添加属性的方式
+    obj.age = 19
+
+    // 通过Object.defineProperty添加属性
+    // 若sex存在，则覆盖；不存在，则添加
+    Object.defineProperty(obj, 'sex', {
+      value: '男',
+      writable: true, // 是否可以重写，默认值为false
+      enumerable: true, // 是否可以通过Object.keys()遍历，默认为false
+      configurable: false // false 则不允许删除这个属性，并且不允许再修改第三个参数里面的特性，默认false
+    })
+    obj.sex = '女'
+    delete obj.sex // 若configurable为false，则不允许删除
+    // 若configurable为false，则再次修改第三个参数里面的特性会报错
+    Object.defineProperty(obj, 'sex', {
+      enumerable: false,
+      configurable: true
+    })
+    /*总结：
+      1.直接通过对象.属性 方式创建的属性，其值可以被重写，可以被遍历出，可以被删除
+      2.通过Object.defineProperty()创建的属性默认是重写无效，无法被遍历，无法被删除
+    */
+  </script>
+</body>
+</html>
