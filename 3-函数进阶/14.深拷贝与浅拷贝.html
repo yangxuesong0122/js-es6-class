@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 浅拷贝：只拷贝一层，更深层次对象级别的只拷贝引用
+      // 深拷贝：拷贝多层，每一级别的数据都会拷贝
+      let obj1 = {
+        name: "yxs",
+        msg: {
+          age: 29
+        }
+      }
+
+      // ES6中的浅拷贝
+      // let obj4 = {}
+      // Object.assign(obj4, obj1)
+      // obj4.msg.age = 32
+      // obj4.name = "alice"
+      // console.log(obj1) // yxs 30
+
+      // 深拷贝：每一层的数据都会被拷贝，开辟的都是新的空间。
+      let obj = {
+        name: "yxs",
+        color: ["white", "black"],
+        size: {
+          content: "small"
+        }
+      }
+      // 以下为通过 函数递归 的方式实现深拷贝
+      function deepCopy(newObj, oldObj) {
+        for (let k in oldObj) {
+          // 判断是不是数组
+          if (oldObj[k] instanceof Array) {
+            newObj[k] = []
+            deepCopy(newObj[k], oldObj[k])
+            // 判断是不是对象
+          } else if (oldObj[k] instanceof Object) { // 数组也属于 Object， 所以上面要先判断数组
+            newObj[k] = {}
+            deepCopy(newObj[k], oldObj[k])
+          } else {
+            newObj[k] = oldObj[k]
+          }
+        }
+      }
+      let obj2 = {}
+      deepCopy(obj2, obj)
+      console.log(obj2)
+    </script>
+  </body>
+</html>
